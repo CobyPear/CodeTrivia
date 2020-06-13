@@ -1,9 +1,9 @@
 /* code quiz
-    1) TODO: when the user visits the site, the page will display the title and a description as well as a highscore link on the top
+    1)when the user visits the site, the page will display the title and a description as well as a highscore link on the top
         as wel as a button to start the quiz
         need a link to high score page on the top left and a timer on the top right
     
-    2) when the user pushes the button, the page will populate with a question and the timer will begin
+    2) TODO: when the user pushes the button, the page will populate with a question and the timer will begin
         page has 4 answer buttons that appear to be ordered lists
 
     3)correct answer stores points, wrong answer subtracts time from clock
@@ -27,10 +27,12 @@ var textEl = document.getElementById('text');
 
 // variable for unhiding buttons
 var hideEl = document.querySelector('.hide');
-console.log(hideEl);
+
+// start button
+var startButtonEl = document.getElementById('start-button');
 
 // variable for timer on page
-var timerEl = document.getElementsByClassName('timer')
+var timerEl = document.querySelector('.timer');
 
 // variable to store high scores
 
@@ -39,30 +41,107 @@ var timerEl = document.getElementsByClassName('timer')
 // variable to store number of correct answers
 
 // variable to set initial timer
-var timer  = 75;
+let secondsRemaning  = 75;
 
 // questions
-var questions [
-    {}
-]
+var questions = [
+    {   
+        question: 'What do you need to make a string?',
+        answers: [
+            {text: 'quesiton marks', correct: false},
+            {text: 'quotation marks', correct: true},
+            {text: 'parenthesses', correct: false},
+            {text: 'script tag', correct: false}
+        ]
+    },
+    {
+        question: 'Question 2',
+        answers: [
+            {text: 'answer 1', correct: false},
+            {text: 'answer 2', correct: false},
+            {text: 'answer 3', correct: true},
+            {text: 'answer 4', correct: false}
+        ]
+    },
+    {
+        question: 'Question 3',
+        answers: [
+            {text: 'answer 1', correct: false},
+            {text: 'answer 2', correct: false},
+            {text: 'answer 3', correct: false},
+            {text: 'answer 4', correct: true}
+        ]
+    },
+    {
+        question: 'Question 4',
+        answers: [
+            {text: 'answer 1', correct: false},
+            {text: 'answer 2', correct: true},
+            {text: 'answer 3', correct: false},
+            {text: 'answer 4', correct: false}
+        ]
+    },
+    {
+        question: 'Question 5',
+        answers: [
+            {text: 'answer 1', correct: true},
+            {text: 'answer 2', correct: false},
+            {text: 'answer 3', correct: false},
+            {text: 'answer 4', correct: false}
+        ]
+    }
+];
+// current question array
+var currentQuestions;
 
 
 
 // FUNCTIONS
 
-// question generator/ game start
-gamestart = () => {
 // timer
-    setInterval(() => {
+function timer() {
+    var timerInterval = setInterval(function() {
+        // decrement seconds left
+        secondsRemaning--;
+        // render seconds remaing to page
+        timerEl.textContent = 'Timer: ' + secondsRemaning;
+        console.log(secondsRemaning)
+        console.log('WORKING')
+        // if the user gets a question wrong, decrease the amount of seconds remaining by some amount
+        // if (questions.answer == false) {
+        //     // render 'Wrong' to the screen
+        //     //decrease amount of seconds remaining
 
-        
-    }, 1000 * timer);
-}
+        //     //if secondsRemaining == 0, stop the game and clear the timer
+        if (secondsRemaning ==  0) {
+        //     clearInterval(timerInterval);
+        clearInterval(timerInterval);
+        headerEl.innerHTML = 'Time is up!'
+        }
+    }, 1000);
+};
 
-// generate a question
+// question generator/ game start
+function gamestart() {
+    //start timer
+    timer();
 
+    // shuffle the question order
+    questions.sort(() => Math.random() -0.5);
+    console.log('QUESTIONS: ', questions)
 
+    // ask a question
+    // questionAsker(questions);
 
+    // // generate a question
+    // questionAsker = (questions) => {
+    //     // for loop goes through question array
+    //     for (let i = 0; i < questions.length; i++) {
+    //         question
+    //     }
+
+    // }
+};
 
 
 
@@ -70,16 +149,19 @@ gamestart = () => {
 //EVENT LISTENERS
 
 // on page load, populate start button and quiz info
-window.addEventListener('load', () => {
+addEventListener('load', () => {
     // populate header
     headerEl.textContent = 'Welcome to the quiz'
     // populate the rules text
     textEl.textContent = 'You have 75 seconds for the quiz. Each wrong answer will decrease your time by X. Correct answers will increase your score. At the end of the quiz, you can input your initials to save your highscore. Good luck!'
     // show the start button
     hideEl.classList.remove('hide');
-})
+});
 
 // on button click start quiz
+startButtonEl.addEventListener('click', function() {
+    gamestart();
+});
 
 // on button click store answer/score
 
@@ -90,12 +172,4 @@ window.addEventListener('load', () => {
 //on click to go back
 
 
-
-
-
-
-
-
-
 // ON LOAD
-
