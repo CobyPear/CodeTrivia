@@ -1,5 +1,5 @@
 /* code quiz
-    1) when the user visits the site, the page will display the title and a description as well as a highscore link on the top
+    1) TODO: when the user visits the site, the page will display the title and a description as well as a highscore link on the top
         as wel as a button to start the quiz
         need a link to high score page on the top left and a timer on the top right
     
@@ -19,6 +19,19 @@
 
 // VARIABLES
 
+// variable to populate h2
+var headerEl = document.getElementById('header');
+ 
+// variable to populate answers and text
+var textEl = document.getElementById('text');
+
+// variable for unhiding buttons
+var hideEl = document.querySelector('.hide');
+console.log(hideEl);
+
+// variable for timer on page
+var timerEl = document.getElementsByClassName('timer')
+
 // variable to store high scores
 
 // variable to store user's name 
@@ -28,6 +41,10 @@
 // variable to set initial timer
 var timer  = 75;
 
+// questions
+var questions [
+    {}
+]
 
 
 
@@ -42,6 +59,8 @@ gamestart = () => {
     }, 1000 * timer);
 }
 
+// generate a question
+
 
 
 
@@ -49,6 +68,16 @@ gamestart = () => {
 
 
 //EVENT LISTENERS
+
+// on page load, populate start button and quiz info
+window.addEventListener('load', () => {
+    // populate header
+    headerEl.textContent = 'Welcome to the quiz'
+    // populate the rules text
+    textEl.textContent = 'You have 75 seconds for the quiz. Each wrong answer will decrease your time by X. Correct answers will increase your score. At the end of the quiz, you can input your initials to save your highscore. Good luck!'
+    // show the start button
+    hideEl.classList.remove('hide');
+})
 
 // on button click start quiz
 
