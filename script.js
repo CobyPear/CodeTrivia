@@ -117,6 +117,7 @@ function timer() {
         //     clearInterval(timerInterval);
         clearInterval(timerInterval);
         headerEl.innerHTML = 'Time is up!'
+        console.log("Time's up")
         }
     }, 1000);
 };
