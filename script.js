@@ -41,18 +41,23 @@ var timerEl = document.querySelector('.timer');
 // make an ordered list for questions to populate
 var aList = document.createElement('ol');
 
-// make the list items
-var li0 = document.createElement("li");
-var li1 = document.createElement("li");
-var li2 = document.createElement("li");
-var li3 = document.createElement("li");
+// make the answer buttons
+var answerButton1 = document.createElement('button');
+var answerButton2 = document.createElement('button');
+var answerButton3 = document.createElement('button');
+var answerButton4 = document.createElement('button');
+
+// answer buttons for onclick event
+
+
+
 // variable to store high scores
 
 // variable to store user's name 
 var hsInitial;
 
 // variable to store number of correct answers aka user's score
-var score;
+var score = 0;
 
 // variable to set initial timer
 let secondsRemaning  = 75;
@@ -111,7 +116,7 @@ var questions = [
     },
 ];
 // current question array
-// var currentQuestions = [];
+var currentQuestion = [];
 
 
 
@@ -156,42 +161,132 @@ function gamestart() {
 
     // ask a question
     questionAsker();
-
-    // // generate a question
-    // questionAsker = (questions) => {
-    //     // for loop goes through question array
-    //     for (let i = 0; i < questions.length; i++) {
-    //         question
-    //     }
-
-    // }
 };
 
 // populate the page with a question
 questionAsker = () => {
+    // debugging
     console.log('WORKING: ')
+console.log('CURRENT Q: ', currentQuestion)
+
     // append the list to be populated to the textEl
     textEl.replaceWith(aList)
 
+    // while (secondsRemaining != 0) {
+        
+    // }
+
     for (let i = 0; i < questions.length; i++) {
+        // store current question
+        currentQuestion = questions[i];
         // render the question to the page
         headerEl.innerHTML = questions[i].question;
         // set each list item texto to the answer's text
-        li0.innerHTML = questions[i].answers.a;
-        li1.innerHTML = questions[i].answers.b;
-        li2.innerHTML = questions[i].answers.c;
-        li3.innerHTML = questions[i].answers.d;
+        answerButton1.innerHTML = questions[i].answers.a;
+        answerButton2.innerHTML = questions[i].answers.b;
+        answerButton3.innerHTML = questions[i].answers.c;
+        answerButton4.innerHTML = questions[i].answers.d;
         //render each answer to the list
-        aList.appendChild(li0);
-        aList.appendChild(li1);
-        aList.appendChild(li2);
-        aList.appendChild(li3);
+        aList.appendChild(answerButton1);
+        aList.appendChild(answerButton2);
+        aList.appendChild(answerButton3);
+        aList.appendChild(answerButton4);
     };
-    
-    
-    
-   
-}
+
+        // on button click store answer/score
+        answerButton1.addEventListener('click', function() {
+            console.log('answer button1 working')
+            // if this is the right answer,
+            if (currentQuestion.correctAnswer == 'a') {
+                // print correct to the screen
+                var aCorrect = document.createElement('correct');
+                aCorrect.textContent = 'Correct!';
+                aList.appendChild(aCorrect);
+                // add 1 to the score
+                score++;
+                console.log(score);
+                // ask next question
+                questionAsker();
+                //else, print wrong to the screen and decrease the time
+            } else {
+                // create 'wrong' element
+                var aWrong = document.createElement('wrong');
+                aWrong.textContent = 'Wrong!'
+                aList.appendChild(aWrong);
+                secondsRemaning -= 10;
+                questionAsker();
+            }
+        });
+        answerButton2.addEventListener('click', function() {
+            console.log('answer button2 working')
+            // if this is the right answer,
+            if (currentQuestion.correctAnswer == 'b') {
+                // print correct to the screen
+                var bCorrect = document.createElement('correct');
+                bCorrect.textContent = 'Correct!';
+                aList.appendChild(bCorrect);
+                // add one to score
+                score++;
+                console.log(score);
+                // ask next quesiton
+                questionAsker();
+                //else, print wrong to the screen and decrease the time
+            } else {
+                // create 'wrong' element
+                var bWrong = document.createElement('wrong');
+                bWrong.textContent = 'Wrong!'
+                aList.appendChild(bWrong);
+                secondsRemaning -= 10;
+                questionAsker();
+            }
+        });
+        answerButton3.addEventListener('click', function() {
+            console.log('answer button3 working')
+            // if this is the right answer,
+            if (currentQuestion.correctAnswer == 'c') {
+                // print correct to the screen
+                var cCorrect = document.createElement('correct');
+                cCorrect.textContent = 'Correct!';
+                aList.appendChild(cCorrect);
+                // add one to score
+                score++;
+                console.log(score);
+                // ask next quesiton
+                questionAsker();
+                //else, print wrong to the screen and decrease the time
+            } else {
+                // create 'wrong' element
+                var cWrong = document.createElement('wrong');
+                cWrong.textContent = 'Wrong!'
+                aList.appendChild(cWrong);
+                secondsRemaning -= 10;
+                questionAsker();
+            }
+        });
+        answerButton4.addEventListener('click', function() {
+            console.log('answer button4 working')
+            // if this is the right answer,
+            if (currentQuestion.correctAnswer == 'd') {
+                // print correct to the screen
+                var dCorrect = document.createElement('correct');
+                dCorrect.textContent = 'Correct!'
+                aList.appendChild(dCorrect);
+                // add one to score
+                score++;
+                console.log(score);
+                // ask next quesiton
+                questionAsker();
+                //else, print wrong to the screen and decrease the time
+            } else {
+                // create 'wrong' element
+                var dWrong = document.createElement('wrong');
+                dWrong.textContent = 'Wrong!'
+                aList.appendChild(dWrong);
+                secondsRemaning -= 10;
+                questionAsker();
+            }
+        });
+};
 
 
 //EVENT LISTENERS
@@ -207,11 +302,9 @@ addEventListener('load', () => {
 });
 
 // on button click start quiz
-startButtonEl.addEventListener('click', function() {
+startButtonEl.addEventListener('click', () => {
     gamestart();
 });
-
-// on button click store answer/score
 
 // on cliick to show highscores
 
