@@ -41,9 +41,6 @@ body {
     padding: 5px;
 }
 
-
-
-
 /* buttons */
 .button, button {
     display: flex;
@@ -60,9 +57,23 @@ body {
     margin: 2px;
 }
 
+#back-btn {
+    color: white;
+    text-decoration: none;
+}
+
 /* ordered list style */
 ol {
     list-style: none;
+}
+
+/* result style */
+
+#result {
+    font-size: 1.5em;
+    font-style: italic;
+    text-decoration: underline overline blueviolet;
+    margin-top: 3px;
 }
 
 button:hover, .button:hover {

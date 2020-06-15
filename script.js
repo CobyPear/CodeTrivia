@@ -14,11 +14,6 @@
 
     5) user can enter initials and save score for later viewing */
 
-
-
-
-
-
 // VARIABLES
 
 // variable to populate h2
@@ -39,25 +34,28 @@ var timerEl = document.querySelector('.timer');
 // make an ordered list for questions to populate
 var aList = document.createElement('ol');
 
+// area to print result
+var result = document.getElementById('result')
+
 // make the answer buttons
 var answerButton1 = document.createElement('button');
 var answerButton2 = document.createElement('button');
 var answerButton3 = document.createElement('button');
 var answerButton4 = document.createElement('button');
+answerButton1.classList.add('answer-button', 'a');
+answerButton2.classList.add('answer-button', 'b');
+answerButton3.classList.add('answer-button', 'c');
+answerButton4.classList.add('answer-button', 'd');
+answerButtons = document.getElementsByClassName('answer-button');
 
-// area to print result
-var result = document.getElementById('result')
-
-// variable to store high scores
-
-// variable to store user's name 
-var hsInitial;
 
 // variable to store number of correct answers aka user's score
 var score = 0;
 
 // variable to set initial timer
 let secondsRemaning  = 75;
+// timer variable
+var timerInterval;
 
 // questions
 var questions = [
@@ -113,16 +111,55 @@ var questions = [
     },
 ];
 // current question array
-var currentQuestion = [];
+var currentQuestion;
+var questionArray = [];
 var i = 0;
-
-
 
 // FUNCTIONS
 
+// game over, enter initials to store high score TODO:
+function enterScore() {
+    clearInterval(timerInterval);
+    timerEl.textContent = '';
+    console.log('GAME OVER');
+    // print 'Game Over!'
+    headerEl.textContent = 'Game Over!';
+    // print the score to the page
+    divEl = document.createElement('div');
+    scoreEl = document.createElement('score');
+    scoreEl.style.color = 'blueviolet';
+    scoreEl.textContent = `Final Score: ${score}`;
+    headerEl.appendChild(divEl);
+    divEl.appendChild(scoreEl);
+    // create input box
+    var form = document.createElement('form');
+    var inputBox = document.createElement('input');
+    // input box attributes
+    inputBox.setAttribute('type', 'text');
+    inputBox.setAttribute('placeholder', 'Enter Initials');
+    // render input box to screen
+    aList.replaceWith(form);
+    form.appendChild(inputBox);
+    
+    // store the initials and go to high scores page
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // variable to store typed in intials
+        var initials = inputBox.value;
+        // stored initials
+        storedInitials = localStorage.setItem('Initials', initials );
+        // check value of initials
+        console.log('INPUT BOX VALUE: ', initials);
+        // open the scores.html page if initials are not blank
+        if (initials != '') {
+            window.open('scores.html', '_self');
+        };
+    });
+};
+
 // timer
 function timer() {
-    var timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
         // decrement seconds left
         secondsRemaning--;
         // render seconds remaing to page
@@ -139,9 +176,7 @@ function timer() {
         //     clearInterval(timerInterval);
         clearInterval(timerInterval);
         timerEl.textContent = 'Timer: ' + secondsRemaning;
-        headerEl.innerHTML = 'Time is up!'
-        textEl.innerHTML = score;
-        console.log("Time's up")
+        enterScore();
         }
     }, 1000);
 };
@@ -156,147 +191,41 @@ function gamestart() {
     // shuffle the question order
     questions.sort(() => Math.random() -0.5);
     console.log('QUESTIONS: ', questions)
+    // store the current question
+    currentQuestion = questions[i];
 
     // ask a question
     questionAsker();
 };
 
-// populate the page with a question FIXME:
+// populate the page with a question
 questionAsker = () => {
-    if (questions[i] > questions.length) {
-        console.log('GAME OVER: ');
+    if (questionArray.length >= questions.length || secondsRemaning == 0) {
         enterScore();
-    }
-    // debugging
-    console.log('CURRENT Q: ', currentQuestion);
-    console.log('value of i: ', i);
-
+    } else {
     // append the list to be populated to the textEl
     textEl.replaceWith(aList);
 
-    // Had this block as a for loop but it wasn't working properly.
-
-        // store current question
-        currentQuestion = questions[i];
-        // render the question to the page
-        headerEl.innerHTML = questions[i].question;
-        // set each list item texto to the answer's text
-        answerButton1.innerHTML = questions[i].answers.a;
-        answerButton2.innerHTML = questions[i].answers.b;
-        answerButton3.innerHTML = questions[i].answers.c;
-        answerButton4.innerHTML = questions[i].answers.d;
-        //render each answer to the list
-        aList.appendChild(answerButton1);
-        aList.appendChild(answerButton2);
-        aList.appendChild(answerButton3);
-        aList.appendChild(answerButton4);
-        //icrement questions index
-        i++;
-    
-
-        // on button click store answer/score
-        answerButton1.addEventListener('click', function() {
-            // if this is the right answer,
-            if (currentQuestion.correctAnswer == 'a') {
-                // print correct to the page
-                result.textContent = 'Correct!';
-                // add 1 to the score
-                score++;
-                console.log('SCORE: ', score);
-                // increment quesiton index
-                // i++;
-                // ask next question
-                questionAsker();
-                
-                //else, print wrong to the page and decrease the time
-            } else {
-                // print 'Wrong!' to the page
-                result.textContent = 'Wrong!';;
-                // take 10 seconds off clock
-                secondsRemaning -= 10;
-                // increment question index
-                // i++;
-                // ask next quesiton
-                questionAsker();
-                
-            }
-        });
-        answerButton2.addEventListener('click', function() {
-            // if this is the right answer,
-            if (currentQuestion.correctAnswer == 'b') {
-                // print correct to the page
-                result.textContent = 'Correct!';
-                // add one to score
-                score++;
-                console.log('SCORE: ', score);
-                // increment quesiton index
-                // i++;
-                // ask next quesiton
-                questionAsker();
-                //else, print wrong to the page and decrease the time
-            } else {
-                // print 'Wrong!' to the page
-                result.textContent = 'Wrong!';
-                // take 10 seconds off clock
-                secondsRemaning -= 10;
-                // increment quesiton index
-                // i++;
-                questionAsker();
-            }
-        });
-        answerButton3.addEventListener('click', function() {
-            // if this is the right answer,
-            if (currentQuestion.correctAnswer == 'c') {
-                // print correct to the page
-                result.textContent = 'Correct!';
-                // add one to score
-                score++;
-                console.log('SCORE: ', score);
-                // increment quesiton index
-                // i++;
-                // ask next quesiton
-                questionAsker();
-                //else, print wrong to the page and decrease the time
-            } else {
-                // print 'Wrong!' to the page
-                result.textContent = 'Wrong!';
-                // take 10 seconds off clock
-                secondsRemaning -= 10;
-                // increment question index
-                // i++;
-                // ask next question
-                questionAsker();
-            }
-        });
-        answerButton4.addEventListener('click', function() {
-            // if this is the right answer,
-            if (currentQuestion.correctAnswer == 'd') {
-                // print correct to the page
-                result.textContent = 'Correct!'
-                // add one to score
-                score++;
-                console.log('SCORE: ', score);
-                //increment quesiton index
-                // i++;
-                // ask next quesiton
-                questionAsker();
-                //else, print wrong to the page and decrease the time
-            } else {
-                // print 'Wrong!' to the page
-                result.textContent = 'Wrong!'
-                // take 10 seconds off clock
-                secondsRemaning -= 10;
-                // increment question index
-                // i++;
-                questionAsker();
-            }
-        });
+    // store current question
+    currentQuestion = questions[i];
+    // store questions into an array to check when there are no more questions to ask
+    questionArray.push(questions[i]);
+    // render the question to the page
+    headerEl.innerHTML = questions[i].question;
+    // set each list item texto to the answer's text
+    answerButton1.innerHTML = questions[i].answers.a;
+    answerButton2.innerHTML = questions[i].answers.b;
+    answerButton3.innerHTML = questions[i].answers.c;
+    answerButton4.innerHTML = questions[i].answers.d;
+    //render each answer to the list
+    aList.appendChild(answerButton1);
+    aList.appendChild(answerButton2);
+    aList.appendChild(answerButton3);
+    aList.appendChild(answerButton4);
+    console.log('value of i: ', i);
+    console.log('CURRENT Q: ', currentQuestion);
+    };
 };
-
-// game over, enter initials to store high score TODO:
-enterScore => {
-    console.log('GAME OVER')
-}
 
 
 //EVENT LISTENERS
@@ -311,14 +240,45 @@ addEventListener('load', () => {
     hideEl.classList.remove('hide');
 });
 
+// bind listener to class name for button nested in body
+    // listen for click in body on class name
+    document.addEventListener('click', function(e) {
+    // working?
+    // console.log('WORKING LISTENER: ')
+    // if the button clicked is an answer button,
+    if (e.target.classList.contains('answer-button')) {
+        console.log('answer buttons work');
+        if (e.target.classList.contains(currentQuestion.correctAnswer)) {
+            console.log('CORRECT ANSWER WORKING')
+            // add one to score
+            score ++;
+            // render 'correct!' to screen
+            result.textContent = 'Correct!'
+            // erase message after 1.5 seconds
+            setTimeout(function() {
+                result.textContent = '' 
+            }, 1000);
+            // increment question index
+            i++;
+            // ask next quesiton
+            questionAsker();
+        } else {
+            console.log('WRONG ANSWER WORKING')
+            // for a wrong answer, take 10 seconds off the clock
+            secondsRemaning -= 10;
+            // render 'Wrong!' to the page
+            result.textContent = 'Wrong!'
+            // erase message after 1.5 seconds
+            setTimeout(function() {
+                result.textContent = '' 
+            }, 1000);
+            //icrement question index
+            i++;
+            //ask next question
+            questionAsker();
+        };
+    }
+});
+
 // on button click start quiz
 startButtonEl.addEventListener('click', gamestart);
-
-// on cliick to show highscores
-
-// on click to clear high scores
-
-//on click to go back
-
-
-// ON LOAD
