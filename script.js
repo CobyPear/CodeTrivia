@@ -46,8 +46,6 @@ answerButton1.classList.add('answer-button', 'a');
 answerButton2.classList.add('answer-button', 'b');
 answerButton3.classList.add('answer-button', 'c');
 answerButton4.classList.add('answer-button', 'd');
-answerButtons = document.getElementsByClassName('answer-button');
-
 
 // variable to store number of correct answers aka user's score
 var score = 0;
@@ -114,12 +112,20 @@ var questions = [
 var currentQuestion;
 var questionArray = [];
 var i = 0;
+// initial initials variable ;)
+var initials;
+// high score object
+var highScoreData = {
+    'name': initials, 
+    'score': score
+};
 
 // FUNCTIONS
 
 // game over, enter initials to store high score TODO:
 function enterScore() {
     clearInterval(timerInterval);
+    console.log(highScoreData)
     timerEl.textContent = '';
     console.log('GAME OVER');
     // print 'Game Over!'
@@ -140,22 +146,36 @@ function enterScore() {
     // render input box to screen
     aList.replaceWith(form);
     form.appendChild(inputBox);
-    
     // store the initials and go to high scores page
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         // variable to store typed in intials
-        var initials = inputBox.value;
+        highScoreData.initials = inputBox.value;
         // stored initials
-        storedInitials = localStorage.setItem('Initials', initials );
+        localStorage.setItem('Initials', JSON.stringify(highScoreData.initials));
         // check value of initials
         console.log('INPUT BOX VALUE: ', initials);
+        // store score into localStorage
+        localStorage.setItem('Score', JSON.stringify(highScoreData.score));
         // open the scores.html page if initials are not blank
         if (initials != '') {
             window.open('scores.html', '_self');
+            
+            // render high scores and initials to scores.html
+            // select display-scores div
+            scoreBoard = document.getElementsByClassName('display-scores');
+            scoreBoard.textContent = highScoreData.initials, highScoreData.score;
+            // scoreBoard.textContent = `${JSON.parse(localStorage.getItem('Initials'))}: ${JSON.parse(localStorage.getItem('Score'))}`;
+            console.log(highScoreData);
         };
     });
 };
+
+// function eventRemover() {
+//     removeEventListener('load', eventRemover);
+// startButtonEl.removeEventListener('click', eventRemover);
+// document.removeEventListener('click', eventRemover);
+// };
 
 // timer
 function timer() {
@@ -235,7 +255,7 @@ addEventListener('load', () => {
     // populate header
     headerEl.textContent = 'Welcome to the quiz'
     // populate the rules text
-    textEl.innerHTML = 'You have 75 seconds for the quiz. Each wrong answer will decrease your time by X. Correct answers will increase your score. At the end of the quiz, you can input your initials to save your highscore. Good luck!'
+    textEl.innerHTML = 'You have 75 seconds for the quiz. Each wrong answer will decrease your time by 10 seconds. Correct answers will increase your score by one. At the end of the quiz, you may input your initials to save your highscore. Good luck!'
     // show the start button
     hideEl.classList.remove('hide');
 });
@@ -244,7 +264,7 @@ addEventListener('load', () => {
     // listen for click in body on class name
     document.addEventListener('click', function(e) {
     // working?
-    // console.log('WORKING LISTENER: ')
+    // console.log('WORKING LISTENER: ');
     // if the button clicked is an answer button,
     if (e.target.classList.contains('answer-button')) {
         console.log('answer buttons work');
