@@ -2,7 +2,7 @@
     1)when the user visits the site, the page will display the title and a description as well as a highscore link on the top
         as wel as a button to start the quiz
         need a link to high score page on the top left and a timer on the top right
-    
+
     2) when the user pushes the button, the page will populate with a question and the timer will begin
         page has 4 answer buttons that appear to be ordered lists
 
@@ -18,7 +18,7 @@
 
 // variable to populate h2
 var headerEl = document.getElementById('header');
- 
+
 // variable to populate answers and text
 var textEl = document.getElementById('text');
 
@@ -57,7 +57,7 @@ var timerInterval;
 
 // questions
 var questions = [
-    {   
+    {
         question: 'What do you need to make a string?',
         answers: {
             a: 'a: question marks',
@@ -67,7 +67,7 @@ var questions = [
         },
         correctAnswer: 'b'
     },
-    {   
+    {
         question: 'Placeholder Question 2',
         answers: {
             a: 'a: Placeholder A 1',
@@ -77,7 +77,7 @@ var questions = [
         },
         correctAnswer: 'a'
     },
-    {   
+    {
         question: 'Placeholder Question 3',
         answers: {
             a: 'a: Placeholder A 1',
@@ -87,7 +87,7 @@ var questions = [
         },
         correctAnswer: 'a'
     },
-    {   
+    {
         question: 'Placeholder Question 4',
         answers: {
             a: 'a: Placeholder A 1',
@@ -97,7 +97,7 @@ var questions = [
         },
         correctAnswer: 'c'
     },
-    {   
+    {
         question: 'Placeholder Question 5',
         answers: {
             a: 'a: Placeholder A 1',
@@ -113,19 +113,21 @@ var currentQuestion;
 var questionArray = [];
 var i = 0;
 // initial initials variable ;)
-var initials;
+// var initials;
+var initialArr = [];
 // high score object
-var highScoreData = {
-    'name': initials, 
-    'score': score
-};
+var scoreArr = [];
+// var highScoreData = {
+//     'initials': inputBox.value.trim(),
+//     score: score
+// };
 
 // FUNCTIONS
 
 // game over, enter initials to store high score TODO:
 function enterScore() {
+    // clear timer
     clearInterval(timerInterval);
-    console.log(highScoreData)
     timerEl.textContent = '';
     console.log('GAME OVER');
     // print 'Game Over!'
@@ -146,27 +148,27 @@ function enterScore() {
     // render input box to screen
     aList.replaceWith(form);
     form.appendChild(inputBox);
+    
     // store the initials and go to high scores page
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        // variable to store typed in intials
-        highScoreData.initials = inputBox.value;
+        // prevent override
+        initialArr = JSON.parse(localStorage.getItem('Initials'));
+        // push initials into inital array FIXME:
+        initialArr.push(inputBox.value);
         // stored initials
-        localStorage.setItem('Initials', JSON.stringify(highScoreData.initials));
-        // check value of initials
-        console.log('INPUT BOX VALUE: ', initials);
+        localStorage.setItem('Initials', JSON.stringify(initialArr));
+        // prevent override
+        scoreArr = JSON.parse(localStorage.getItem('Score'))
+        // push score into score array
+        scoreArr.push(score);
         // store score into localStorage
-        localStorage.setItem('Score', JSON.stringify(highScoreData.score));
+        localStorage.setItem('Score', JSON.stringify(scoreArr));
+        console.log(initialArr, scoreArr)
+       
         // open the scores.html page if initials are not blank
-        if (initials != '') {
+        if (inputBox.value != '') {
             window.open('scores.html', '_self');
-            
-            // render high scores and initials to scores.html
-            // select display-scores div
-            scoreBoard = document.getElementsByClassName('display-scores');
-            scoreBoard.textContent = highScoreData.initials, highScoreData.score;
-            // scoreBoard.textContent = `${JSON.parse(localStorage.getItem('Initials'))}: ${JSON.parse(localStorage.getItem('Score'))}`;
-            console.log(highScoreData);
         };
     });
 };
@@ -252,12 +254,22 @@ questionAsker = () => {
 
 // on page load, populate start button and quiz info
 addEventListener('load', () => {
-    // populate header
-    headerEl.textContent = 'Welcome to the quiz'
-    // populate the rules text
-    textEl.innerHTML = 'You have 75 seconds for the quiz. Each wrong answer will decrease your time by 10 seconds. Correct answers will increase your score by one. At the end of the quiz, you may input your initials to save your highscore. Good luck!'
-    // show the start button
-    hideEl.classList.remove('hide');
+    // if the header element exists on the page...
+    if (headerEl){
+        // ...populate header
+      headerEl.textContent = 'Welcome to the quiz'  
+    };
+    // if text element exists on the page...
+    if (textEl) {
+      // ...populate the rules text
+    textEl.innerHTML = 'You have 75 seconds for the quiz. Each wrong answer will decrease your time by 10 seconds. Correct answers will increase your score by one. At the end of the quiz, you may input your initials to save your highscore. Good luck!'  
+    };
+    // if hide element exists on the page...
+    if (hideEl) {
+      // ...show the start button
+    hideEl.classList.remove('hide');  
+    };
+    
 });
 
 // bind listener to class name for button nested in body
@@ -276,7 +288,7 @@ addEventListener('load', () => {
             result.textContent = 'Correct!'
             // erase message after 1.5 seconds
             setTimeout(function() {
-                result.textContent = '' 
+                result.textContent = ''
             }, 1000);
             // increment question index
             i++;
@@ -290,7 +302,7 @@ addEventListener('load', () => {
             result.textContent = 'Wrong!'
             // erase message after 1.5 seconds
             setTimeout(function() {
-                result.textContent = '' 
+                result.textContent = ''
             }, 1000);
             //icrement question index
             i++;
@@ -300,5 +312,8 @@ addEventListener('load', () => {
     }
 });
 
-// on button click start quiz
-startButtonEl.addEventListener('click', gamestart);
+    // if start button el exists on page...
+if (startButtonEl) {
+    // ...on button click start quiz
+    startButtonEl.addEventListener('click', gamestart);
+};
