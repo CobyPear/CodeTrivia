@@ -50,8 +50,8 @@ var questions = [{
         answers: {
             a: '< >',
             b: '" "',
-            c: 'c: ( )',
-            d: 'd: { }'
+            c: '( )',
+            d: '{ }'
         },
         correctAnswer: 'b'
     },

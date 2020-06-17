@@ -17,7 +17,6 @@ body {
 
 .high-score {
     float: left;
-    margin-left: 24px;
     font-size: 1.8em;
     text-shadow: 1px 1px rgb(68, 68, 68);
     font-family: 'Staatliches', cursive;
@@ -32,6 +31,8 @@ body {
     margin-right: 24px;
     font-size: 1.8em;
     color: white;
+    text-shadow: 2px 3px blueviolet;
+    font-weight: bold;
 }
 
 #container {
@@ -57,6 +58,13 @@ body {
     font-family: 'Staatliches', cursive;
 }
 
+#text {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.4em;
+    text-align: center;
+    text-shadow: 1px 1px blueviolet;
+}
+
 
 /* buttons */
 
@@ -76,6 +84,8 @@ button {
     margin: 16px 4px;
     box-shadow: 2px 3px white;
     font-family: 'Cairo', sans-serif;
+    justify-content: center;
+    align-items: center;
 }
 
 #back-btn {
@@ -114,6 +124,10 @@ a {
     color: blueviolet;
 }
 
+#hs {
+    margin: 5px 0px 0px 4px;
+}
+
 .high-score:hover {
     color: #adff2f;
     text-decoration: none;
@@ -143,4 +157,26 @@ a {
     transform: scale(1.2);
     -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
     transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+    #container #text {
+        width: 100% font-size: .7em;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    ...
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    ...
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    ...
 }
