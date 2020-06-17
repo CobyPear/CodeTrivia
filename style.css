@@ -9,9 +9,6 @@ body {
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
-    height: auto;
-    max-height: 100%;
-    max-width: 100wh;
     background-color: rgb(24, 20, 20);
 }
 
@@ -159,24 +156,19 @@ a {
     transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
 
-// Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) {
-    #container #text {
-        width: 100% font-size: .7em;
+
+/* // Small devices (landscape phones, 576px and up) */
+
+@media (max-width: 576px) {
+    #container {
+        position: static;
+        margin-top: 50%;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
-}
-
-// Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
-    ...
-}
-
-// Large devices (desktops, 992px and up)
-@media (min-width: 992px) {
-    ...
-}
-
-// Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) {
-    ...
+    #header {
+        margin-top: 9.6%;
+        font-size: 1.8em;
+    }
 }
