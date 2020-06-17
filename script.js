@@ -9,7 +9,6 @@
     3) correct answer stores points, wrong answer subtracts time from clock
         TODO: FIXME: fix for loop (right now the loop goes to the last question in the questions array instead of the first)
 
-
     4) when all questions are answered or timer == 0, game is over.
 
     5) user can enter initials and save score for later viewing */
@@ -48,7 +47,7 @@ var timerInterval;
 // questions
 var questions = [
     {
-        question: 'What do you need to make a string?',
+        question: 'What do you need to make a string in JavaScript?',
         answers: {
             a: 'a: question marks',
             b: 'b: quotation marks',
@@ -58,42 +57,42 @@ var questions = [
         correctAnswer: 'b'
     },
     {
-        question: 'Placeholder Question 2',
+        question: 'Which of these is a complex data type in JavaScript?',
         answers: {
-            a: 'a: Placeholder A 1',
-            b: 'b: Placeholder A 2',
-            c: 'c: Placeholder A 3',
-            d: 'd: Placeholder A 4'
+            a: 'a: function',
+            b: 'b: boolean',
+            c: 'c: number',
+            d: 'd: string'
         },
         correctAnswer: 'a'
     },
     {
-        question: 'Placeholder Question 3',
+        question: 'Which of these can NOT be used to set a variable in JavaScript?',
         answers: {
-            a: 'a: Placeholder A 1',
-            b: 'b: Placeholder A 2',
-            c: 'c: Placeholder A 3',
-            d: 'd: Placeholder A 4'
-        },
-        correctAnswer: 'a'
-    },
-    {
-        question: 'Placeholder Question 4',
-        answers: {
-            a: 'a: Placeholder A 1',
-            b: 'b: Placeholder A 2',
-            c: 'c: Placeholder A 3',
-            d: 'd: Placeholder A 4'
+            a: 'a: var',
+            b: 'b: const',
+            c: 'c: is',
+            d: 'd: let'
         },
         correctAnswer: 'c'
     },
     {
-        question: 'Placeholder Question 5',
+        question: 'What character is used to select an id in CSS?',
         answers: {
-            a: 'a: Placeholder A 1',
-            b: 'b: Placeholder A 2',
-            c: 'c: Placeholder A 3',
-            d: 'd: Placeholder A 4'
+            a: 'a: .',
+            b: 'b: #',
+            c: 'c: !',
+            d: 'd: &'
+        },
+        correctAnswer: 'b'
+    },
+    {
+        question: 'The default display property of a <div> in HTML is...',
+        answers: {
+            a: 'a: inline-block',
+            b: 'b: none',
+            c: 'c: inline',
+            d: 'd: block'
         },
         correctAnswer: 'd'
     },
@@ -246,8 +245,6 @@ addEventListener('load', () => {
 // bind listener to class name for button nested in body
 // listen for click in body on class name
 document.addEventListener('click', function (e) {
-    // working?
-    // console.log('WORKING LISTENER: ');
     // if the button clicked is an answer button,
     if (e.target.classList.contains('answer-button')) {
         console.log('answer buttons work');
