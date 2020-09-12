@@ -12,3 +12,16 @@ A sample question:
 Users can store their high scores and view them at the 'highscore' link at the top left corner of the page:
 
 ![High Score Screen](https://i.imgur.com/mbamwRy.jpg)
+
+# Technologies Used
+
+- JavaScript
+- CSS
+- HTML
+- LocalStorage
+
+# Future Development
+
+- More Questions
+- Light Mode & Dark Mode
+- Animations
